@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddgpm8vr5ccsj"]
+
+[ext_resource type="Script" path="res://sceny/poziom.gd" id="1_o63w6"]
+[ext_resource type="PackedScene" uid="uid://cjghlsm8do6m" path="res://sceny/siedlisko.tscn" id="1_rb3rh"]
+
+[node name="Node2D" type="Node2D"]
+scale = Vector2(0.37, 0.37)
+script = ExtResource("1_o63w6")
+
+[node name="Siedliska" type="Node2D" parent="."]
+rotation = -0.226893
+
+[node name="Siedlisko14" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1897.78, 1809.46)
+
+[node name="Siedlisko13" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(2191.12, 1116.27)
+
+[node name="Siedlisko12" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1948.48, 1479.57)
+
+[node name="Siedlisko11" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1460.58, 1618.19)
+
+[node name="Siedlisko10" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1800.58, 961.557)
+
+[node name="Siedlisko9" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1494.13, 1256.24)
+
+[node name="Siedlisko8" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1052.08, 1581.52)
+
+[node name="Siedlisko7" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1327.94, 755.984)
+
+[node name="Siedlisko6" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(1187.75, 1177.94)
+
+[node name="Siedlisko5" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(808.963, 614.149)
+
+[node name="Siedlisko4" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(711.609, 1302.75)
+
+[node name="Siedlisko3" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(306.176, 609.916)
+
+[node name="Siedlisko2" parent="Siedliska" instance=ExtResource("1_rb3rh")]
+position = Vector2(550.851, 859.508)
+
+[node name="Button" type="Button" parent="."]
+offset_right = 400.0
+offset_bottom = 200.0
+text = "Nowa tura"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjghlsm8do6m"]
+
+[ext_resource type="Texture2D" uid="uid://dn6hqhccworiq" path="res://assets/siedlisko.png" id="1_ms3af"]
+[ext_resource type="Script" path="res://sceny/siedlisko.gd" id="1_sexjl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qp6xm"]
+radius = 452.585
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1dkig"]
+radius = 125.483
+
+[sub_resource type="LabelSettings" id="LabelSettings_7pu50"]
+font_size = 82
+font_color = Color(0.435294, 0.247059, 0.133333, 1)
+
+[node name="Siedlisko" type="Area2D"]
+collision_mask = 0
+script = ExtResource("1_sexjl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ms3af")
+
+[node name="Zasięg" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zasięg"]
+shape = SubResource("CircleShape2D_qp6xm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1dkig")
+debug_color = Color(0.996078, 0, 0.156863, 0.419608)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 97.0
+offset_bottom = 104.0
+label_settings = SubResource("LabelSettings_7pu50")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="nawiazane_polaczenie" from="." to="." method="_gdy_nawiazane_polaczenie"]
+[connection signal="nowa_tura" from="." to="." method="_nowa_tura"]
