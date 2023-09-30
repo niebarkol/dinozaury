@@ -3,7 +3,13 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	for dinozaur in $Dinozaury.get_children():
+		if dinozaur is Dinozaur:
+			var siedlisko: Siedlisko = $Siedliska.get_children().pick_random()
+			while siedlisko.zasiedlajacy_dinozaur != null:
+				siedlisko = $Siedliska.get_children().pick_random()
+			siedlisko.zasiedlajacy_dinozaur = dinozaur
+			dinozaur.position = siedlisko.position
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

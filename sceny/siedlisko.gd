@@ -5,6 +5,7 @@ var połączenia: Array
 var linie: CanvasGroup
 var klikalny: bool
 var zdobycz:= 0
+var zasiedlajacy_dinozaur: Dinozaur
 
 signal nowa_tura
 signal nawiazane_polaczenie(partner: Siedlisko)
@@ -31,7 +32,7 @@ func _nowa_tura():
 			queue_redraw()
 	
 	
-	if zdobycz == 0:
+	if zdobycz == 0 and zasiedlajacy_dinozaur == null:
 		if not randi_range(0, 10):
 			zdobycz = randi_range(1, 3)
 	elif not randi_range(0, 7):
