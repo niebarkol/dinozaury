@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cooi1widl5qpd"]
+[gd_scene load_steps=4 format=3 uid="uid://cooi1widl5qpd"]
 
 [ext_resource type="Script" path="res://sceny/dinozaur.gd" id="1_avhre"]
 [ext_resource type="Texture2D" uid="uid://rj33alldrir3" path="res://assets/zly_dinozaur.png" id="2_jq5pk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q4ghj"]
+font_size = 57
+font_color = Color(1, 0, 0, 1)
 
 [node name="Dinozaur" type="Node2D"]
 script = ExtResource("1_avhre")
@@ -9,3 +13,8 @@ script = ExtResource("1_avhre")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.711914, 0.711914)
 texture = ExtResource("2_jq5pk")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_q4ghj")

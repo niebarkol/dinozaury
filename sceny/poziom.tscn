@@ -58,6 +58,7 @@ position = Vector2(550.851, 859.508)
 [node name="Button" type="Button" parent="."]
 offset_right = 400.0
 offset_bottom = 200.0
+theme_override_font_sizes/font_size = 70
 text = "Nowa tura"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -63,3 +63,5 @@ func _gdy_nawiazane_polaczenie(partner):
 	if partner not in połączenia:
 		połączenia.append(partner)
 #	print(self, połączenia)
+
+		
