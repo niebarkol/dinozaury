@@ -1,4 +1,5 @@
 extends Dinozaur
+class_name Player
 
 
 func przetwórz_klickables() -> Array:

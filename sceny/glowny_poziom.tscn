@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=3 uid="uid://cd563y37af6wy"]
+
+[ext_resource type="Script" path="res://sceny/poziom.gd" id="1_c7y2w"]
+[ext_resource type="Texture2D" uid="uid://bu1pmtwqbc28f" path="res://assets/tło.png" id="1_odma8"]
+[ext_resource type="PackedScene" uid="uid://cjghlsm8do6m" path="res://sceny/siedlisko.tscn" id="2_wjgmf"]
+[ext_resource type="PackedScene" uid="uid://cooi1widl5qpd" path="res://sceny/dinozaur.tscn" id="4_qbmnr"]
+[ext_resource type="PackedScene" uid="uid://dly6x5w0tgbhn" path="res://sceny/player.tscn" id="5_q22r6"]
+
+[node name="Node2D" type="Node2D"]
+scale = Vector2(0.715, 0.715)
+script = ExtResource("1_c7y2w")
+
+[node name="Tło" type="Sprite2D" parent="."]
+position = Vector2(1340.35, 751.498)
+scale = Vector2(1.39809, 1.39259)
+texture = ExtResource("1_odma8")
+
+[node name="Siedliska" type="Node2D" parent="."]
+
+[node name="Siedlisko" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(188.732, 1291.55)
+
+[node name="Siedlisko2" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(454.93, 1021.13)
+
+[node name="Siedlisko3" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(625.352, 1364.79)
+
+[node name="Siedlisko4" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(959.155, 1159.15)
+
+[node name="Siedlisko5" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(661.972, 733.803)
+
+[node name="Siedlisko6" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(150.704, 528.169)
+
+[node name="Siedlisko7" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(661.972, 400)
+
+[node name="Siedlisko8" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(1591.55, 194.366)
+
+[node name="Siedlisko9" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(1166.2, 528.169)
+
+[node name="Siedlisko10" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(1688.73, 733.803)
+
+[node name="Siedlisko11" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(1463.38, 1232.39)
+
+[node name="Siedlisko12" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(1895.77, 1236.62)
+
+[node name="Siedlisko13" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(2173.24, 1021.13)
+
+[node name="Siedlisko14" parent="Siedliska" instance=ExtResource("2_wjgmf")]
+position = Vector2(1992.96, 271.831)
+
+[node name="Dinozaury" type="Node2D" parent="."]
+
+[node name="Dinozaur5" parent="Dinozaury" instance=ExtResource("4_qbmnr")]
+
+[node name="Dinozaur3" parent="Dinozaury" instance=ExtResource("4_qbmnr")]
+
+[node name="Dinozaur" parent="Dinozaury" instance=ExtResource("4_qbmnr")]
+
+[node name="Dinozaur2" parent="Dinozaury" instance=ExtResource("4_qbmnr")]
+
+[node name="Dinozaur4" parent="Dinozaury" instance=ExtResource("4_qbmnr")]
+
+[node name="Dinozaur6" parent="Dinozaury" instance=ExtResource("4_qbmnr")]
+
+[node name="Player" parent="." instance=ExtResource("5_q22r6")]

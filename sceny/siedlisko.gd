@@ -67,21 +67,26 @@ func przyznaj_zdobycz():
 func rozstrzygnij_walkę():
 	if obecni.size() > 1:
 		var porównanie_sił = func (pierwszy, drugi) -> bool:
-			if pierwszy is Dinozaur and drugi is Dinozaur:
-				if pierwszy.potęga > drugi.potęga:
-					return true
-				else:
-					return false
-			elif not pierwszy is Dinozaur:
-				return false
-			else:
+			if pierwszy.potęga > drugi.potęga:
 				return true
+			else:
+				return false
 		
 		obecni.sort_custom(porównanie_sił)
 		for przegrany in obecni.slice(1):
 			if przegrany is Dinozaur:
-				przegrany.queue_free()
 				zrob_krew()
+				if przegrany is Player:
+					#Przegrana
+					przegrany.hide()
+					await get_tree().create_timer(0.5).timeout
+					get_tree().reload_current_scene()
+				przegrany.queue_free()
+				await get_tree().process_frame
+				if get_parent().get_parent().get_node("Dinozaury").get_children().is_empty():
+					#Wygrana
+					await get_tree().create_timer(0.5).timeout
+					get_tree().reload_current_scene()
 				
 		obecni = [obecni[0]]
 		#TODO: może dodać jakiś efekt zabijania
