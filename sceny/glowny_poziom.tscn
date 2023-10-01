@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://cd563y37af6wy"]
+[gd_scene load_steps=7 format=3 uid="uid://cd563y37af6wy"]
 
 [ext_resource type="Script" path="res://sceny/poziom.gd" id="1_c7y2w"]
 [ext_resource type="Texture2D" uid="uid://bu1pmtwqbc28f" path="res://assets/tło.png" id="1_odma8"]
 [ext_resource type="PackedScene" uid="uid://cjghlsm8do6m" path="res://sceny/siedlisko.tscn" id="2_wjgmf"]
 [ext_resource type="PackedScene" uid="uid://cooi1widl5qpd" path="res://sceny/dinozaur.tscn" id="4_qbmnr"]
 [ext_resource type="PackedScene" uid="uid://dly6x5w0tgbhn" path="res://sceny/player.tscn" id="5_q22r6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wfcfq"]
+font_size = 500
+font_color = Color(0.803922, 0, 0.0862745, 1)
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(0.715, 0.715)
@@ -74,3 +78,23 @@ position = Vector2(1992.96, 271.831)
 [node name="Dinozaur6" parent="Dinozaury" instance=ExtResource("4_qbmnr")]
 
 [node name="Player" parent="." instance=ExtResource("5_q22r6")]
+
+[node name="Wygrana" type="Label" parent="."]
+visible = false
+offset_left = 244.755
+offset_top = 194.406
+offset_right = 2514.76
+offset_bottom = 1279.41
+text = "Wygrana!"
+label_settings = SubResource("LabelSettings_wfcfq")
+vertical_alignment = 1
+
+[node name="Przegrana" type="Label" parent="."]
+visible = false
+offset_left = 60.1399
+offset_top = 194.406
+offset_right = 2640.14
+offset_bottom = 1279.41
+text = "Przegrana!"
+label_settings = SubResource("LabelSettings_wfcfq")
+vertical_alignment = 1

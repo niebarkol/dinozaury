@@ -16,11 +16,13 @@ signal kliknięto(co: Siedlisko)
 func _ready():
 	pass # Replace with function body.
 
+func _process(delta):
+	queue_redraw()
 
 func _draw():
 	for połączenie in połączenia:
 		#draw_line(position,połączenie.position,Color.RED)
-		draw_line(Vector2.ZERO,połączenie.position-position,Color.RED,10)
+		draw_line(Vector2.ZERO,połączenie.position-position,Color.BROWN,10)
 
 func _on_button_pressed():
 	pass # Replace with function body.
@@ -79,12 +81,14 @@ func rozstrzygnij_walkę():
 				if przegrany is Player:
 					#Przegrana
 					przegrany.hide()
+					get_parent().get_parent().get_node("Przegrana").show()
 					await get_tree().create_timer(0.5).timeout
 					get_tree().reload_current_scene()
 				przegrany.queue_free()
 				await get_tree().process_frame
 				if get_parent().get_parent().get_node("Dinozaury").get_children().is_empty():
 					#Wygrana
+					get_parent().get_parent().get_node("Wygrana").show()
 					await get_tree().create_timer(0.5).timeout
 					get_tree().reload_current_scene()
 				
