@@ -10,4 +10,5 @@ func przetwórz_klickables() -> Array:
 		klikable.get_node("AlertKliknięcia").visible = true
 		klikable.get_node("AlertKliknięcia").disabled = false
 		klickables.append(klikable)
+	aktualne_siedlisko.queue_redraw()
 	return klickables

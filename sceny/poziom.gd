@@ -33,11 +33,16 @@ func _ready():
 			await get_tree().process_frame
 			leże.wylosuj_zdobycz()
 			leże.nawiąż_połączenie()
+			leże.queue_redraw()
 			leże.klikalny = true
 			leże.kliknięto.connect(nowa_tura)
 	
 	
 	klickables = $Player.przetwórz_klickables()
+	
+	for leże in $Siedliska.get_children():
+		if leże is Siedlisko:
+			leże.queue_redraw()
 
 
 
@@ -96,6 +101,8 @@ func nowa_tura(cel: Siedlisko):
 		
 	await get_tree().process_frame
 	klickables = $Player.przetwórz_klickables()
+	for siedlisko in $Siedliska.get_children():
+		siedlisko.queue_redraw()
 
 func przesuń_dinozaura(dino: Dinozaur, leże: Siedlisko):
 	if leże == null:
