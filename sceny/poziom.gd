@@ -6,52 +6,65 @@ func _ready():
 	for dinozaur in $Dinozaury.get_children():
 		if dinozaur is Dinozaur:
 			var siedlisko: Siedlisko = $Siedliska.get_children().pick_random()
-			while siedlisko.zasiedlajacy_dinozaur != null:
+			while not siedlisko.obecni.is_empty():
 				siedlisko = $Siedliska.get_children().pick_random()
-			siedlisko.zasiedlajacy_dinozaur = dinozaur
+			siedlisko.obecni.append(dinozaur)
 			dinozaur.aktualne_siedlisko = siedlisko
 			dinozaur.position = siedlisko.position
+	
+	for leże in $Siedliska.get_children():
+		if leże is Siedlisko:
+			leże.wylosuj_zdobycz()
+			leże.nawiąż_połączenie()
+			leże.klikalny = true
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
-
-func _on_button_pressed():
+func nowa_tura():
 	for siedlisko in $Siedliska.get_children():
-		siedlisko.emit_signal("nowa_tura")
+		if siedlisko is Siedlisko:
+			if siedlisko.klikalny:
+				siedlisko.klikalny = false
+			else:
+				return
 	
 	for dino in $Dinozaury.get_children():
 		if dino is Dinozaur:
-			print(dino.aktualne_siedlisko)
-			if not dino.aktualne_siedlisko.połączenia.is_empty():
-					print("B")
-					przesuń_dinozaura(
-						dino,
-						dino.aktualne_siedlisko.połączenia.pick_random()
-						)
+			przesuń_dinozaura(
+				dino,
+				dino.aktualne_siedlisko.połączenia.pick_random()
+				)
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	
+	for siedlisko in $Siedliska.get_children():
+		if siedlisko is Siedlisko:
+			siedlisko.rozstrzygnij_walkę()
+	
+	
+	await get_tree().process_frame
+	
+	
+	for siedlisko in $Siedliska.get_children():
+		siedlisko.przyznaj_zdobycz()
+		siedlisko.wylosuj_zdobycz()
+		siedlisko.nawiąż_połączenie()
+		siedlisko.klikalny = true
 
 func przesuń_dinozaura(dino: Dinozaur, leże: Siedlisko):
+	if leże == null:
+		return
 	if dino.aktualne_siedlisko != null:
-		dino.aktualne_siedlisko.zasiedlajacy_dinozaur = null
+		dino.aktualne_siedlisko.obecni = []
 	dino.aktualne_siedlisko = leże
-	
-	if leże.zasiedlajacy_dinozaur != null:
-		var przeciwnik: Dinozaur = leże.zasiedlajacy_dinozaur
-		if przeciwnik.potęga == dino.potęga:
-			var losowy: Dinozaur = [dino, przeciwnik].pick_random()
-			losowy.queue_free()
-			if losowy == dino:
-				return
-		elif przeciwnik.potęga < dino.potęga:
-			przeciwnik.queue_free()
-		else:
-			dino.queue_free()
-			return
-	dino.position = leże.position
-	
-	if leże.zdobycz > 0:
-		dino.potęga += leże.zdobycz
-		leże.zdobycz = 0
-		dino.find_child("Label").text = str(dino.potęga)
+	leże.obecni.append(dino)
+	var twink: Tween = create_tween()
+	twink.tween_property(
+		dino,
+		"position",
+		leże.position,
+		0.2
+		).set_ease(Tween.EASE_IN_OUT)
+
+

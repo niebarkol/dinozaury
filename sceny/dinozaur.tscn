@@ -17,4 +17,5 @@ texture = ExtResource("2_jq5pk")
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+text = "0"
 label_settings = SubResource("LabelSettings_q4ghj")

@@ -3,51 +3,16 @@ extends Area2D
 
 var połączenia: Array
 var linie: CanvasGroup
-var klikalny: bool
+var klikalny: bool = false
 var zdobycz:= 0
-var zasiedlajacy_dinozaur: Dinozaur
+var obecni: Array
 
-signal nowa_tura
 signal nawiazane_polaczenie(partner: Siedlisko)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func _nowa_tura():
-	klikalny= false
-	połączenia = []
-	
-	for siedlisko in $"Zasięg".get_overlapping_areas():
-		if siedlisko == self:
-			continue
-		if randi_range(0,1):
-			połączenia.append(siedlisko)
-			siedlisko.emit_signal("nawiazane_polaczenie", get_node(get_path()))
-			queue_redraw()
-	
-	
-	if zdobycz == 0 and zasiedlajacy_dinozaur == null:
-		if not randi_range(0, 10):
-			zdobycz = randi_range(1, 3)
-	elif not randi_range(0, 7):
-		zdobycz = 0
-	
-	if zdobycz == 0:
-		$Label.text = ""
-	else:
-		$Label.text = str(zdobycz)
-	
-	
-	await get_tree().process_frame
-	await get_tree().process_frame
-	klikalny = true
-	
 
 func _draw():
 	for połączenie in połączenia:
@@ -57,6 +22,15 @@ func _draw():
 func _on_button_pressed():
 	pass # Replace with function body.
 
+func nawiąż_połączenie():
+	połączenia = []
+	for siedlisko in $"Zasięg".get_overlapping_areas():
+		if siedlisko == self:
+			continue
+		if randi_range(0,1):
+			połączenia.append(siedlisko)
+			siedlisko.emit_signal("nawiazane_polaczenie", get_node(get_path()))
+			queue_redraw()
 
 func _gdy_nawiazane_polaczenie(partner):
 	await get_tree().process_frame
@@ -65,3 +39,43 @@ func _gdy_nawiazane_polaczenie(partner):
 #	print(self, połączenia)
 
 		
+
+func wylosuj_zdobycz():
+	if zdobycz == 0 and obecni.is_empty():
+		if not randi_range(0, 10):
+			zdobycz = randi_range(1, 3)
+	elif not randi_range(0, 7):
+		zdobycz = 0
+	
+	if zdobycz == 0:
+		$Label.text = ""
+	else:
+		$Label.text = str(zdobycz)
+
+func przyznaj_zdobycz():
+	if zdobycz > 0 and not obecni.is_empty():
+		var dino: Dinozaur = obecni[0]
+		dino.potęga += zdobycz
+		zdobycz = 0
+		dino.find_child("Label").text = str(dino.potęga)
+
+
+func rozstrzygnij_walkę():
+	if obecni.size() > 1:
+		var porównanie_sił = func (pierwszy, drugi) -> bool:
+			if pierwszy is Dinozaur and drugi is Dinozaur:
+				if pierwszy.potęga > drugi.potęga:
+					return true
+				else:
+					return false
+			elif not pierwszy is Dinozaur:
+				return false
+			else:
+				return true
+		
+		obecni.sort_custom(porównanie_sił)
+		for przegrany in obecni.slice(1):
+			if przegrany is Dinozaur:
+				przegrany.queue_free()
+		obecni = [obecni[0]]
+		#TODO: może dodać jakiś efekt zabijania

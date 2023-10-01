@@ -38,4 +38,3 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="nawiazane_polaczenie" from="." to="." method="_gdy_nawiazane_polaczenie"]
-[connection signal="nowa_tura" from="." to="." method="_nowa_tura"]
