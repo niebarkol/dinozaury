@@ -10,6 +10,7 @@ var obecni: Array
 var krew = preload("res://sceny/krew.tscn")
 
 signal nawiazane_polaczenie(partner: Siedlisko)
+signal kliknięto(co: Siedlisko)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,10 +33,11 @@ func nawiąż_połączenie():
 		if randi_range(0,1):
 			połączenia.append(siedlisko)
 			siedlisko.emit_signal("nawiazane_polaczenie", get_node(get_path()))
-			queue_redraw()
+	queue_redraw()
 
 func _gdy_nawiazane_polaczenie(partner):
 	await get_tree().process_frame
+	queue_redraw()
 	if partner not in połączenia:
 		połączenia.append(partner)
 #	print(self, połączenia)
@@ -91,3 +93,8 @@ func zrob_krew():
 	await get_tree().create_timer(flaki.lifetime).timeout
 	flaki.queue_free()
 	
+
+
+func _on_kliknięcie():
+	emit_signal("kliknięto", self)
+

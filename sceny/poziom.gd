@@ -1,5 +1,7 @@
 extends Node2D
 
+var klickables: Array
+signal kliknięto(co: Siedlisko)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,9 +11,22 @@ func _ready():
 			while not siedlisko.obecni.is_empty():
 				siedlisko = $Siedliska.get_children().pick_random()
 			siedlisko.obecni.append(dinozaur)
+			print(siedlisko.is_class("Siedlisko"))
 			dinozaur.aktualne_siedlisko = siedlisko
 			dinozaur.position = siedlisko.position
 			dinozaur.zmień_kolor(losowy_kolor(dinozaur))
+			
+	var dinozaur = $Player
+	var siedlisko= $Siedliska.get_children().pick_random()
+	while not siedlisko.obecni.is_empty():
+		siedlisko = $Siedliska.get_children().pick_random()
+	siedlisko.obecni.append(dinozaur)
+	print(siedlisko.is_class("Siedlisko"))
+	dinozaur.aktualne_siedlisko = siedlisko
+	dinozaur.position = siedlisko.position
+	
+	await get_tree().process_frame
+	
 	
 	for leże in $Siedliska.get_children():
 		if leże is Siedlisko:
@@ -19,21 +34,28 @@ func _ready():
 			leże.wylosuj_zdobycz()
 			leże.nawiąż_połączenie()
 			leże.klikalny = true
+			leże.kliknięto.connect(nowa_tura)
+	
+	
+	klickables = $Player.przetwórz_klickables()
 
 
 
-func nowa_tura():
+func nowa_tura(cel: Siedlisko):
 	for siedlisko in $Siedliska.get_children():
 		if siedlisko is Siedlisko:
+			siedlisko.queue_redraw()
 			if siedlisko.klikalny:
 				siedlisko.klikalny = false
 			else:
 				return
+			siedlisko.get_node("AlertKliknięcia").disabled = true
+			siedlisko.get_node("AlertKliknięcia").visible = false
 	
+	przesuń_dinozaura($Player, cel)
 	for dino in $Dinozaury.get_children():
 		if dino is Dinozaur:
 			var kierunek_poruszenia: Vector2 = dino.ewaluuj_kierunek($Siedliska.get_children())
-			print(dino, kierunek_poruszenia)
 			var możliwe_kierunki: Array = dino.aktualne_siedlisko.połączenia
 			if możliwe_kierunki.is_empty():
 				continue
@@ -48,7 +70,6 @@ func nowa_tura():
 					else:
 						return true
 			możliwe_kierunki.sort_custom(sort_wg_atrakcyjnosci)
-			print(dino, position.direction_to(możliwe_kierunki[0].position).angle_to(kierunek_poruszenia))
 			przesuń_dinozaura(
 				dino,
 				możliwe_kierunki[0]
@@ -69,7 +90,12 @@ func nowa_tura():
 		siedlisko.przyznaj_zdobycz()
 		siedlisko.wylosuj_zdobycz()
 		siedlisko.nawiąż_połączenie()
+		await get_tree().process_frame
+		siedlisko.queue_redraw()
 		siedlisko.klikalny = true
+		
+	await get_tree().process_frame
+	klickables = $Player.przetwórz_klickables()
 
 func przesuń_dinozaura(dino: Dinozaur, leże: Siedlisko):
 	if leże == null:

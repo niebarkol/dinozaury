@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dly6x5w0tgbhn"]
+
+[ext_resource type="Script" path="res://sceny/player.gd" id="1_0s4nw"]
+[ext_resource type="Texture2D" uid="uid://b1tyhelknwq4b" path="res://assets/player.png" id="2_yiy71"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_r5wep"]
+font_size = 47
+font_color = Color(1, 0.0705882, 1, 1)
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_0s4nw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.558594, 0.558594)
+texture = ExtResource("2_yiy71")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 32.0
+offset_bottom = 77.0
+text = "0"
+label_settings = SubResource("LabelSettings_r5wep")
