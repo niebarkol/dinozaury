@@ -7,6 +7,8 @@ var klikalny: bool = false
 var zdobycz:= 0
 var obecni: Array
 
+var krew = preload("res://sceny/krew.tscn")
+
 signal nawiazane_polaczenie(partner: Siedlisko)
 
 # Called when the node enters the scene tree for the first time.
@@ -77,5 +79,15 @@ func rozstrzygnij_walkę():
 		for przegrany in obecni.slice(1):
 			if przegrany is Dinozaur:
 				przegrany.queue_free()
+				zrob_krew()
+				
 		obecni = [obecni[0]]
 		#TODO: może dodać jakiś efekt zabijania
+
+func zrob_krew():
+	var flaki = krew.instantiate()
+	add_child(flaki)
+	flaki.emitting = true
+	await get_tree().create_timer(flaki.lifetime).timeout
+	flaki.queue_free()
+	
