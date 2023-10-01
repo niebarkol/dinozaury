@@ -11,9 +11,11 @@ func _ready():
 			siedlisko.obecni.append(dinozaur)
 			dinozaur.aktualne_siedlisko = siedlisko
 			dinozaur.position = siedlisko.position
+			dinozaur.zmień_kolor(losowy_kolor(dinozaur))
 	
 	for leże in $Siedliska.get_children():
 		if leże is Siedlisko:
+			await get_tree().process_frame
 			leże.wylosuj_zdobycz()
 			leże.nawiąż_połączenie()
 			leże.klikalny = true
@@ -30,9 +32,26 @@ func nowa_tura():
 	
 	for dino in $Dinozaury.get_children():
 		if dino is Dinozaur:
+			var kierunek_poruszenia: Vector2 = dino.ewaluuj_kierunek($Siedliska.get_children())
+			print(dino, kierunek_poruszenia)
+			var możliwe_kierunki: Array = dino.aktualne_siedlisko.połączenia
+			if możliwe_kierunki.is_empty():
+				continue
+			#ta lambda została mi objawiona o 3:00  przez Lemury, nie kwestionować
+			#3:20 update, sama nie wiem czy to działa, niech ktoś proszę to zakwestionuje
+			var sort_wg_atrakcyjnosci = func (
+				pierwsze: Siedlisko, drugie: Siedlisko) -> bool:
+					if cos(position.direction_to(pierwsze.position) \
+						.angle_to(kierunek_poruszenia)) < cos(position \
+							.direction_to(drugie.position).angle_to(kierunek_poruszenia)):
+								return false
+					else:
+						return true
+			możliwe_kierunki.sort_custom(sort_wg_atrakcyjnosci)
+			print(dino, position.direction_to(możliwe_kierunki[0].position).angle_to(kierunek_poruszenia))
 			przesuń_dinozaura(
 				dino,
-				dino.aktualne_siedlisko.połączenia.pick_random()
+				możliwe_kierunki[0]
 				)
 	
 	await get_tree().create_timer(0.2).timeout
@@ -67,4 +86,12 @@ func przesuń_dinozaura(dino: Dinozaur, leże: Siedlisko):
 		0.2
 		).set_ease(Tween.EASE_IN_OUT)
 
-
+func losowy_kolor(obiekt: Node) -> Color:
+	#DLACZEGO TO MI DAJE TE SAME KOLORY DLA WSZYSTKICH AAAA KURWA
+	var rng = RandomNumberGenerator.new()
+	rng.seed = obiekt.to_string().hash()
+	return Color(
+		rng.randf_range(0,1),
+		rng.randf_range(0,1),
+		rng.randf_range(0,1),
+	)
