@@ -100,6 +100,8 @@ func nowa_tura(cel: Siedlisko):
 		siedlisko.klikalny = true
 		
 	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
 	klickables = $Player.przetwórz_klickables()
 	for siedlisko in $Siedliska.get_children():
 		siedlisko.queue_redraw()

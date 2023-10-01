@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cd563y37af6wy"]
+[gd_scene load_steps=8 format=3 uid="uid://cd563y37af6wy"]
 
 [ext_resource type="Script" path="res://sceny/poziom.gd" id="1_c7y2w"]
 [ext_resource type="Texture2D" uid="uid://bu1pmtwqbc28f" path="res://assets/tło.png" id="1_odma8"]
@@ -8,7 +8,11 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_wfcfq"]
 font_size = 500
-font_color = Color(0.803922, 0, 0.0862745, 1)
+font_color = Color(0.635294, 0.439216, 0.219608, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pvrxy"]
+font_size = 500
+font_color = Color(1, 0, 0, 1)
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(0.715, 0.715)
@@ -96,5 +100,5 @@ offset_top = 194.406
 offset_right = 2640.14
 offset_bottom = 1279.41
 text = "Przegrana!"
-label_settings = SubResource("LabelSettings_wfcfq")
+label_settings = SubResource("LabelSettings_pvrxy")
 vertical_alignment = 1

@@ -1,6 +1,8 @@
 extends Dinozaur
 class_name Player
 
+func _ready():
+	potęga = 0
 
 func przetwórz_klickables() -> Array:
 	var klickables: Array = [aktualne_siedlisko]

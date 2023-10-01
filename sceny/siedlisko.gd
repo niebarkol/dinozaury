@@ -16,7 +16,7 @@ signal kliknięto(co: Siedlisko)
 func _ready():
 	pass # Replace with function body.
 
-func _process(delta):
+func _process(_delta):
 	queue_redraw()
 
 func _draw():
@@ -35,7 +35,11 @@ func nawiąż_połączenie():
 		if randi_range(0,1):
 			połączenia.append(siedlisko)
 			siedlisko.emit_signal("nawiazane_polaczenie", get_node(get_path()))
-	queue_redraw()
+		queue_redraw()
+		await get_tree().process_frame
+		await get_tree().process_frame
+		if not self in siedlisko.połączenia:
+			print (self, siedlisko.połączenia)
 
 func _gdy_nawiazane_polaczenie(partner):
 	await get_tree().process_frame
@@ -77,6 +81,7 @@ func rozstrzygnij_walkę():
 		obecni.sort_custom(porównanie_sił)
 		for przegrany in obecni.slice(1):
 			if przegrany is Dinozaur:
+				$AudioStreamPlayer2D.play()
 				zrob_krew()
 				if przegrany is Player:
 					#Przegrana
@@ -93,7 +98,6 @@ func rozstrzygnij_walkę():
 					get_tree().reload_current_scene()
 				
 		obecni = [obecni[0]]
-		#TODO: może dodać jakiś efekt zabijania
 
 func zrob_krew():
 	var flaki = krew.instantiate()

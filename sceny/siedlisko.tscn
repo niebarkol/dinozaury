@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjghlsm8do6m"]
+[gd_scene load_steps=7 format=3 uid="uid://cjghlsm8do6m"]
 
 [ext_resource type="Texture2D" uid="uid://dn6hqhccworiq" path="res://assets/siedlisko.png" id="1_ms3af"]
 [ext_resource type="Script" path="res://sceny/siedlisko.gd" id="1_sexjl"]
+[ext_resource type="AudioStream" uid="uid://cr8da5br7qrh3" path="res://assets/uderzenia.mp3" id="3_cy7am"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qp6xm"]
 radius = 452.585
@@ -48,6 +49,9 @@ offset_bottom = 104.0
 label_settings = SubResource("LabelSettings_7pu50")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_cy7am")
 
 [connection signal="nawiazane_polaczenie" from="." to="." method="_gdy_nawiazane_polaczenie"]
 [connection signal="pressed" from="AlertKliknięcia" to="." method="_on_kliknięcie"]
