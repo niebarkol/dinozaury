@@ -64,8 +64,6 @@ func nowa_tura(cel: Siedlisko):
 			var możliwe_kierunki: Array = dino.aktualne_siedlisko.połączenia
 			if możliwe_kierunki.is_empty():
 				continue
-			#ta lambda została mi objawiona o 3:00  przez Lemury, nie kwestionować
-			#3:20 update, sama nie wiem czy to działa, niech ktoś proszę to zakwestionuje
 			var sort_wg_atrakcyjnosci = func (
 				pierwsze: Siedlisko, drugie: Siedlisko) -> bool:
 					if cos(position.direction_to(pierwsze.position) \
